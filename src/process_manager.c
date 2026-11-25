@@ -80,3 +80,97 @@ int start_workers(void)
     alarm(CHECK_INTERVAL);
     return 0;
 }
+
+static int find_worker_by_pid(pid_t pid)
+{
+    int i;
+
+    for (i = 0; i < num_workers; i++)
+    {
+        if (workers[i].pid == pid)
+            return i;
+    }
+    return -1;
+}
+
+void reap_children(void)
+{
+    int status;
+    pid_t pid;
+
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0)
+    {
+        int idx = find_worker_by_pid(pid);
+        char msg[160];
+
+        if (idx < 0)
+            continue;
+
+        workers[idx].pid = -1;
+
+        /* kapanırken ölenleri yeniden baslatma */
+        if (shutdown_requested)
+        {
+            workers[idx].state = WORKER_STOPPED;
+            snprintf(msg, sizeof(msg),
+                     "Terminated during shutdown: Worker %d (PID %d)",
+                     idx, (int)pid);
+            log_event(msg);
+            continue;
+        }
+
+        /* exit code == 0 : yeniden başlatma yok */
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+        {
+            workers[idx].state = WORKER_EXITED;
+            snprintf(msg, sizeof(msg),
+                     "Normal termination: Worker %d (PID %d, code 0)",
+                     idx, (int)pid);
+            log_event(msg);
+            continue;
+        }
+
+        /* beklenmeyen çıkış olması durumunda hata kodu veya sinyali yazdırırız */
+        if (WIFEXITED(status))
+        {
+            snprintf(msg, sizeof(msg),
+                     "Termination with error: Worker %d (PID %d, code %d)",
+                     idx, (int)pid, WEXITSTATUS(status));
+        }
+        else if (WIFSIGNALED(status))
+        {
+            snprintf(msg, sizeof(msg),
+                     "Terminated by signal: Worker %d (PID %d, signal %d)",
+                     idx, (int)pid, WTERMSIG(status));
+        }
+        else
+        {
+            snprintf(msg, sizeof(msg),
+                     "Unexpected termination: Worker %d (PID %d)",
+                     idx, (int)pid);
+        }
+        log_event(msg);
+
+        /* en fazla 3 kez yeniden başlatmak için eklediğim kontrol */
+        if (workers[idx].restart_count < MAX_RESTARTS)
+        {
+            workers[idx].restart_count++;
+            snprintf(msg, sizeof(msg),
+                     "Restarting: Worker %d (attempt %d/%d)",
+                     idx, workers[idx].restart_count, MAX_RESTARTS);
+            log_event(msg);
+
+            workers[idx].state = WORKER_STOPPED;
+            if (spawn_worker(idx) == -1)
+                workers[idx].state = WORKER_FAILED;
+        }
+        else
+        {
+            workers[idx].state = WORKER_FAILED;
+            snprintf(msg, sizeof(msg),
+                     "Restart limit exceed: Worker %d (limit %d), won't restart",
+                     idx, MAX_RESTARTS);
+            log_event(msg);
+        }
+    }
+}
