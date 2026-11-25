@@ -209,3 +209,27 @@ void check_workers(void)
     if (!shutdown_requested)
         alarm(CHECK_INTERVAL);
 }
+
+void signal_workers(int signo)
+{
+    char msg[128];
+    int i;
+
+    for (i = 0; i < num_workers; i++)
+    {
+        if (workers[i].state == WORKER_RUNNING && workers[i].pid > 0)
+        {
+            if (kill(workers[i].pid, signo) == -1 && errno != ESRCH)
+            {
+                perror("kill");
+            }
+            else
+            {
+                snprintf(msg, sizeof(msg),
+                         "Signal (%d) was sent: Worker %d (PID %d)",
+                         signo, i, (int)workers[i].pid);
+                log_event(msg);
+            }
+        }
+    }
+}
