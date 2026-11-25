@@ -246,3 +246,25 @@ int active_worker_count(void)
     }
     return count;
 }
+
+int get_worker_count(void)
+{
+    return num_workers;
+}
+
+const Worker *get_workers(void)
+{
+    return workers;
+}
+
+const char *worker_state_to_str(WorkerState state)
+{
+    switch (state)
+    {
+        case WORKER_RUNNING: return "RUNNING";
+        case WORKER_EXITED:  return "EXITED";
+        case WORKER_FAILED:  return "FAILED";
+        case WORKER_STOPPED: return "STOPPED";
+        default:             return "UNKNOWN";
+    }
+}
