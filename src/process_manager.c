@@ -174,3 +174,38 @@ void reap_children(void)
         }
     }
 }
+
+void check_workers(void)
+{
+    char msg[128];
+    int running = 0;
+    int i;
+
+    reap_children();
+
+    for (i = 0; i < num_workers; i++)
+    {
+        if (workers[i].state == WORKER_RUNNING && workers[i].pid > 0)
+        {
+            if (kill(workers[i].pid, 0) == 0)
+            {
+                running++;
+            }
+            else if (errno == ESRCH)
+            {
+                snprintf(msg, sizeof(msg),
+                         "Periodic check: Worker %d (PID %d) not found",
+                         i, (int)workers[i].pid);
+                log_event(msg);
+            }
+        }
+    }
+
+    snprintf(msg, sizeof(msg),
+             "Periodic check: %d/%d child process is running",
+             running, num_workers);
+    log_event(msg);
+
+    if (!shutdown_requested)
+        alarm(CHECK_INTERVAL);
+}
