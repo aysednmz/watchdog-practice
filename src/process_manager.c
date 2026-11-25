@@ -233,3 +233,16 @@ void signal_workers(int signo)
         }
     }
 }
+
+int active_worker_count(void)
+{
+    int count = 0;
+    int i;
+
+    for (i = 0; i < num_workers; i++)
+    {
+        if (workers[i].state == WORKER_RUNNING && workers[i].pid > 0)
+            count++;
+    }
+    return count;
+}
