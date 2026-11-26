@@ -1,0 +1,15 @@
+[2026-11-26 09:37:16] Watchdog programı başlatıldı.
+[2026-11-26 09:37:16] Child process was started: Worker 0 (PID 7835)
+[2026-11-26 09:37:16] Child process was started: Worker 1 (PID 7836)
+[2026-11-26 09:37:16] Child process was started: Worker 2 (PID 7837)
+[2026-11-26 09:37:20] Normal termination: Worker 2 (PID 7837, code 0)
+[2026-11-26 09:37:21] Periodic check: 2/3 child process is running
+[2026-11-26 09:37:26] Periodic check: 2/3 child process is running
+[2026-11-26 09:37:31] Periodic check: 2/3 child process is running
+[2026-11-26 09:37:36] Periodic check: 2/3 child process is running
+[2026-11-26 09:37:40] Güvenli kapatma işlemi başlatıldı.
+[2026-11-26 09:37:40] Signal (15) was sent: Worker 0 (PID 7835)
+[2026-11-26 09:37:40] Signal (15) was sent: Worker 1 (PID 7836)
+[2026-11-26 09:37:40] Terminated during shutdown: Worker 0 (PID 7835)
+[2026-11-26 09:37:40] Terminated during shutdown: Worker 1 (PID 7836)
+[2026-11-26 09:37:40] Güvenli kapatma işlemi tamamlandı.

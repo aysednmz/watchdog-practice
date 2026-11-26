@@ -48,13 +48,13 @@ running, while the third one exits normally after four seconds.
 
 We use the following signals to manage the processes:
 
-| Signal | Purpose |
-|--------|---------|
-| SIGCHLD | Detects child process termination |
-| SIGALRM | Checks worker status periodically |
-| SIGUSR1 | Generates a status report |
-| SIGINT | Stops the program safely |
-| SIGTERM | Stops the program safely |
+ Signal --> Purpose 
+
+ SIGCHLD --> Detects child process termination 
+ SIGALRM --> Checks worker status periodically 
+ SIGUSR1 --> Generates a status report 
+ SIGINT --> Stops the program safely 
+ SIGTERM --> Stops the program safely 
 
 To get a status report, open another terminal and run:
 **kill -SIGUSR1 <WATCHDOG_PID>**
@@ -102,26 +102,37 @@ Our test results:
 All seven automated tests passed. We also manually
 tested the shutdown process using Ctrl+C.
 
+For more details, see the [Test Results](TEST_RESULTS.md)
+and [Sample Logs](docs/sample_log.txt).
+
 ## Project Structure
 
 
-watchdog-practice/
-├── include/
-│   ├── logger.h
-│   ├── process_manager.h
-│   └── signal_manager.h
-├── src/
-│   ├── logger.c
-│   ├── main.c
-│   ├── process_manager.c
-│   └── signal_manager.c
-├── workers/
-│   └── worker.c
-├── tests/
-│   └── test_scenarios.sh
-├── .gitignore
-├── Makefile
-└── README.md
+## Project Structure
+
+
+    watchdog-practice
+    ├── docs
+    │   ├── manual_shutdown_log.txt
+    │   └── sample_log.txt
+    ├── include
+    │   ├── logger.h
+    │   ├── process_manager.h
+    │   └── signal_manager.h
+    ├── src
+    │   ├── logger.c
+    │   ├── main.c
+    │   ├── process_manager.c
+    │   └── signal_manager.c
+    ├── tests
+    │   └── test_scenarios.sh
+    ├── workers
+    │   └── worker.c
+    ├── .gitignore
+    ├── Makefile
+    ├── README.md
+    └── TEST_RESULTS.md
+
 
 
 ## Team Responsibilities

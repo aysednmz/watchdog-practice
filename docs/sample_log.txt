@@ -1,0 +1,27 @@
+[2026-11-26 09:49:51] Watchdog programı başlatıldı.
+[2026-11-26 09:49:51] Child process was started: Worker 0 (PID 624)
+[2026-11-26 09:49:51] Child process was started: Worker 1 (PID 625)
+[2026-11-26 09:49:51] Child process was started: Worker 2 (PID 626)
+[2026-11-26 09:49:55] Normal termination: Worker 2 (PID 626, code 0)
+[2026-11-26 09:49:55] ----- Worker Status Report -----
+[2026-11-26 09:49:55] Total workers: 3
+[2026-11-26 09:49:55] Worker 0 | PID: 624 | State: RUNNING | Restarts: 0/3
+[2026-11-26 09:49:55] Worker 1 | PID: 625 | State: RUNNING | Restarts: 0/3
+[2026-11-26 09:49:55] Worker 2 | PID: -1 | State: EXITED | Restarts: 0/3
+[2026-11-26 09:49:55] ----- End of Status Report -----
+[2026-11-26 09:49:55] Terminated by signal: Worker 0 (PID 624, signal 9)
+[2026-11-26 09:49:55] Restarting: Worker 0 (attempt 1/3)
+[2026-11-26 09:49:55] Child process was started: Worker 0 (PID 679)
+[2026-11-26 09:49:55] Terminated by signal: Worker 0 (PID 679, signal 9)
+[2026-11-26 09:49:55] Restarting: Worker 0 (attempt 2/3)
+[2026-11-26 09:49:55] Child process was started: Worker 0 (PID 692)
+[2026-11-26 09:49:55] Terminated by signal: Worker 0 (PID 692, signal 9)
+[2026-11-26 09:49:55] Restarting: Worker 0 (attempt 3/3)
+[2026-11-26 09:49:55] Child process was started: Worker 0 (PID 705)
+[2026-11-26 09:49:56] Periodic check: 2/3 child process is running
+[2026-11-26 09:49:56] Terminated by signal: Worker 0 (PID 705, signal 9)
+[2026-11-26 09:49:56] Restart limit exceed: Worker 0 (limit 3), won't restart
+[2026-11-26 09:49:56] Güvenli kapatma işlemi başlatıldı.
+[2026-11-26 09:49:56] Signal (15) was sent: Worker 1 (PID 625)
+[2026-11-26 09:49:56] Terminated during shutdown: Worker 1 (PID 625)
+[2026-11-26 09:49:56] Güvenli kapatma işlemi tamamlandı.
