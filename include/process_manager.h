@@ -31,5 +31,5 @@ int  active_worker_count(void);
 /* log kısmında worker durumlarının okunabilmesi için ekledim */
 int           get_worker_count(void);
 const Worker *get_workers(void);
-
+const char *worker_state_to_str(WorkerState state);
 #endif
