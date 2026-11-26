@@ -1,0 +1,5 @@
+/watchdog
+/worker
+/process_events.log
+/process_events.log.bak
+*.o
